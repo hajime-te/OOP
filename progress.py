@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-class AtCodr:
+class AtCoder:
 
     def __init__(self, contest_name, problem_char):
         """
