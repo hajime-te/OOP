@@ -67,3 +67,23 @@ class ProgressList:
         self.__progress_list.append(progress)
 
 
+class Training:
+
+    def __init__(self):
+        pass
+
+    def report_training(self):
+        pass
+
+    def create_atcoder(self):
+        is_valid_input_contest = True
+        while is_valid_input_contest:
+            contest = input('Please enter the contest that you participated in: ')
+            if contest in ["ABC", "ARC", "AGC"]:
+                is_valid_input_contest = False
+
+        
+
+
+
+
