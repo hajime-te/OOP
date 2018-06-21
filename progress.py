@@ -14,7 +14,7 @@ class Record(metaclass=ABCMeta):
         input_data = input(input_message)
         if re.match(correct_pattern, input_data):
             return True, input_data
-        print("valid contest name, retry input")
+        print("valid input data, retry input")
         return False, None
 
     def input_loop(self, pattern, input_message):
