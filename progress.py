@@ -10,18 +10,18 @@ class Record(metaclass=ABCMeta):
         pass
 
     @staticmethod
-    def substitute_correct_data(correct_pattern, target_variables, input_message):
+    def substitute_correct_data(correct_pattern, input_message):
         input_data = input(input_message)
         if re.match(correct_pattern, input_data):
-            target_variables = input_data
-            return True
+            return True, input_data
         print("valid contest name, retry input")
-        return False
+        return False, None
 
-    def input_loop(self, pattern, target_variables, input_message):
-        is_correct_input = False
+    def input_loop(self, pattern, input_message):
+        is_correct_input, correct_data = False, None
         while not is_correct_input:
-            is_correct_input = self.substitute_correct_data(pattern, target_variables, input_message)
+            is_correct_input, correct_data = self.substitute_correct_data(pattern, input_message)
+        return correct_data
 
 
 class AtCoder(Record):
@@ -36,8 +36,8 @@ class AtCoder(Record):
         self.init_record()
 
     def init_record(self):
-        self.input_loop(r'(ABC|ARC|AGC)([0-9]{3})', self.__contest_name, 'input contest name that you participated :')
-        self.input_loop(r'A|B|C|D|E|F', self.__problem_char, 'input problem ID [A-F]: ')
+        self.__contest_name = self.input_loop(r'(ABC|ARC|AGC)([0-9]{3})', 'input contest name that you participated :')
+        self.__problem_char = self.input_loop(r'A|B|C|D|E|F','input problem ID [A-F]: ')
 
     def build_record(self):
         return {'Contest': self.__contest_name, 'Problem': self.__problem_char}
@@ -98,4 +98,4 @@ class ProgressList:
 
 
 a=AtCoder()
-a.init_record()
+
