@@ -37,23 +37,27 @@ class AtCoder(Record):
 
     def init_record(self):
         self.__contest_name = self.input_loop(r'(ABC|ARC|AGC)([0-9]{3})', 'input contest name that you participated :')
-        self.__problem_char = self.input_loop(r'A|B|C|D|E|F','input problem ID [A-F]: ')
+        self.__problem_char = self.input_loop(r'A|B|C|D|E|F', 'input problem ID [A-F]: ')
 
     def build_record(self):
         return {'Contest': self.__contest_name, 'Problem': self.__problem_char}
 
 
+class Problem(Record):
 
-class Problem:
-
-    def __init__(self, atcoder, tag):
+    def __init__(self):
         """
 
         :param AtCoder atcoder:
         :param str tag:
         """
-        self.__atcoder = atcoder
-        self.__tag = tag
+        self.__atcoder = None
+        self.__tag = str()
+        self.init_record()
+
+    def init_record(self):
+        self.__atcoder = AtCoder()
+        self.__tag = self.input_loop(r'[a-z]+', 'input problem tag: ')
 
     def build_record(self):
         problem_record = {'Tag': self.__tag}
@@ -61,9 +65,12 @@ class Problem:
         return problem_record
 
 
-class Date:
+class Date(Record):
 
     def __init__(self):
+        self.__date = None
+
+    def init_record(self):
         self.__date = datetime.today()
 
     def build_record(self):
@@ -96,6 +103,4 @@ class ProgressList:
         self.__progress_list.append(progress)
 
 
-
-a=AtCoder()
-
+p = Problem()
