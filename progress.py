@@ -1,22 +1,13 @@
 from datetime import datetime
 import re
+from abc import ABCMeta, abstractmethod
 
 
-class AtCoder:
+class Record(metaclass=ABCMeta):
 
-    def __init__(self):
-        """
-        :param str contest_name:
-        :param str problem_char:
-        """
-        self.__contest_name = str()
-        self.__problem_char = str()
-
+    @abstractmethod
     def init_record(self):
-
-        self.input_loop(self.substitute_correct_data, r'(ABC|ARC|AGC)([0-9]{3})', self.__contest_name, 'input contest name that you participated :')
-
-        self.input_loop(self.substitute_correct_data, r'A|B|C|D|E|F', self.__problem_char, 'input problem ID [A-F]: ')
+        pass
 
     @staticmethod
     def substitute_correct_data(correct_pattern, target_variables, input_message):
@@ -27,12 +18,26 @@ class AtCoder:
         print("valid contest name, retry input")
         return False
 
-    @staticmethod
-    def input_loop(input_func, pattern, target_variables, input_message):
+    def input_loop(self, pattern, target_variables, input_message):
         is_correct_input = False
         while not is_correct_input:
-            is_correct_input = input_func(pattern, target_variables, input_message)
+            is_correct_input = self.substitute_correct_data(pattern, target_variables, input_message)
 
+
+class AtCoder(Record):
+
+    def __init__(self):
+        """
+        :param str contest_name:
+        :param str problem_char:
+        """
+        self.__contest_name = str()
+        self.__problem_char = str()
+        self.init_record()
+
+    def init_record(self):
+        self.input_loop(r'(ABC|ARC|AGC)([0-9]{3})', self.__contest_name, 'input contest name that you participated :')
+        self.input_loop(r'A|B|C|D|E|F', self.__problem_char, 'input problem ID [A-F]: ')
 
     def build_record(self):
         return {'Contest': self.__contest_name, 'Problem': self.__problem_char}
