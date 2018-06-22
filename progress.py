@@ -6,7 +6,7 @@ from abc import ABCMeta, abstractmethod
 class Record(metaclass=ABCMeta):
 
     @abstractmethod
-    def init_record(self):
+    def build_record(self):
         pass
 
     @staticmethod
@@ -31,11 +31,6 @@ class AtCoder(Record):
         :param str contest_name:
         :param str problem_char:
         """
-        self.__contest_name = str()
-        self.__problem_char = str()
-        self.init_record()
-
-    def init_record(self):
         self.__contest_name = self.input_loop(r'(ABC|ARC|AGC)([0-9]{3})', 'input contest name that you participated :')
         self.__problem_char = self.input_loop(r'A|B|C|D|E|F', 'input problem ID [A-F]: ')
 
@@ -51,11 +46,6 @@ class Problem(Record):
         :param AtCoder atcoder:
         :param str tag:
         """
-        self.__atcoder = None
-        self.__tag = str()
-        self.init_record()
-
-    def init_record(self):
         self.__atcoder = AtCoder()
         self.__tag = self.input_loop(r'[a-z]+', 'input problem tag: ')
 
@@ -68,9 +58,6 @@ class Problem(Record):
 class Date(Record):
 
     def __init__(self):
-        self.__date = None
-
-    def init_record(self):
         self.__date = datetime.today()
 
     def build_record(self):
@@ -79,14 +66,14 @@ class Date(Record):
 
 class Progress:
 
-    def __init__(self, problem, date):
+    def __init__(self):
         """
 
         :param Problem problem:
         :param Date date:
         """
-        self.__problem = problem
-        self.__date = date
+        self.__problem = Problem()
+        self.__date = Date()
 
     def to_data_record(self):
         progress_record = self.__date.build_record()
@@ -101,6 +88,3 @@ class ProgressList:
 
     def add_progress(self, progress):
         self.__progress_list.append(progress)
-
-
-p = Problem()
