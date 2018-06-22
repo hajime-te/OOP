@@ -64,7 +64,7 @@ class Date(Record):
         return {'Date': self.__date.strftime("%m-%d")}
 
 
-class Progress:
+class Progress(Record):
 
     def __init__(self):
         """
@@ -75,7 +75,7 @@ class Progress:
         self.__problem = Problem()
         self.__date = Date()
 
-    def to_data_record(self):
+    def build_record(self):
         progress_record = self.__date.build_record()
         progress_record.update(self.__problem.build_record())
         return progress_record
@@ -88,3 +88,4 @@ class ProgressList:
 
     def add_progress(self, progress):
         self.__progress_list.append(progress)
+
