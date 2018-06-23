@@ -1,6 +1,7 @@
 from datetime import datetime
 import re
 from abc import ABCMeta, abstractmethod
+from fileio import CsvFile
 
 
 
@@ -89,4 +90,10 @@ class ProgressList:
 
     def add_progress(self, progress):
         self.__progress_list.append(progress)
+
+    def read_record_from_resource(self, resource):
+        resource.read_record(self.__progress_list)
+
+
+
 
