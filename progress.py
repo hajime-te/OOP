@@ -4,7 +4,6 @@ from abc import ABCMeta, abstractmethod
 from fileio import CsvFile
 
 
-
 class Record(metaclass=ABCMeta):
 
     @abstractmethod
@@ -93,7 +92,3 @@ class ProgressList:
 
     def read_record_from_resource(self, resource):
         resource.read_record(self.__progress_list)
-
-
-
-
