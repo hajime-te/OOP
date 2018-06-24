@@ -2,6 +2,7 @@ from datetime import datetime
 import re
 from abc import ABCMeta, abstractmethod
 from fileio import CsvFile
+from collections import OrderedDict
 
 
 class Record(metaclass=ABCMeta):
@@ -36,7 +37,9 @@ class AtCoder(Record):
         self.__problem_char = self.input_loop(r'A|B|C|D|E|F', 'input problem ID [A-F]: ')
 
     def build_record(self):
-        return {'Contest': self.__contest_name, 'Problem': self.__problem_char}
+        atcoder_record = OrderedDict({'Contest': self.__contest_name})
+        atcoder_record.update(OrderedDict({'Problem': self.__problem_char}))
+        return atcoder_record
 
 
 class Problem(Record):
@@ -51,8 +54,8 @@ class Problem(Record):
         self.__tag = self.input_loop(r'[a-z]+', 'input problem tag: ')
 
     def build_record(self):
-        problem_record = {'Tag': self.__tag}
-        problem_record.update(self.__atcoder.build_record())
+        problem_record = self.__atcoder.build_record()
+        problem_record.update(OrderedDict({'Tag': self.__tag}))
         return problem_record
 
 
@@ -62,7 +65,7 @@ class Date(Record):
         self.__date = datetime.today()
 
     def build_record(self):
-        return {'Date': self.__date.strftime("%m-%d")}
+        return OrderedDict({'Date': self.__date.strftime("%m-%d")})
 
 
 class Progress(Record):
@@ -77,8 +80,8 @@ class Progress(Record):
         self.__date = Date()
 
     def build_record(self):
-        progress_record = self.__date.build_record()
-        progress_record.update(self.__problem.build_record())
+        progress_record = self.__problem.build_record()
+        progress_record.update(self.__date.build_record())
         return progress_record
 
 
@@ -92,3 +95,5 @@ class ProgressList:
 
     def read_record_from_resource(self, resource):
         resource.read_record(self.__progress_list)
+
+
