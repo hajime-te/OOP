@@ -1,5 +1,5 @@
 import csv
-from collections import  OrderedDict
+from collections import OrderedDict
 
 
 class CsvFile:
@@ -15,12 +15,14 @@ class CsvFile:
     def write_record(self, record_container):
         with open(self.__file_name, 'w', newline='\n') as csv_file:
             writer = csv.writer(csv_file, delimiter=",")
-            for record in record_container:
-                writer.writerows([record.values()])
+            self.write_record_to_csv(writer, record_container)
 
+    @staticmethod
+    def write_record_to_csv(writer, record_container):
+        for record in record_container:
+            writer.writerows([record.values()])
 
     @staticmethod
     def append_record_to_container(reader, record_container):
         for row in reader:
             record_container.append(dict(row))
-
