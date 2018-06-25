@@ -19,10 +19,14 @@ class CsvFile:
 
     @staticmethod
     def write_record_to_csv(writer, record_container):
+        def extract_values_from_dict(record):
+            return [record.values()]
+
         for record in record_container:
-            writer.writerows([record.values()])
+            writer.writerows(extract_values_from_dict(record))
 
     @staticmethod
     def append_record_to_container(reader, record_container):
         for row in reader:
             record_container.append(dict(row))
+
