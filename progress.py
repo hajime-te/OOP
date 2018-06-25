@@ -95,5 +95,3 @@ class ProgressList:
 
     def read_record_from_resource(self, resource):
         resource.read_record(self.__progress_list)
-
-

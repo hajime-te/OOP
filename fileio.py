@@ -19,8 +19,8 @@ class CsvFile:
 
     @staticmethod
     def write_record_to_csv(writer, record_container):
-        def extract_values_from_dict(record):
-            return [record.values()]
+        def extract_values_from_dict(one_record):
+            return [one_record.values()]
 
         for record in record_container:
             writer.writerows(extract_values_from_dict(record))
