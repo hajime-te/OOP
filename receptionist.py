@@ -14,3 +14,19 @@ class Receptionist:
         command = input('>>> ')
         is_quit = True if command == 'q' else False
         return is_quit, command
+
+
+class BulletinBoard:
+
+    def __init__(self, record_container):
+        self.__target_record = record_container
+
+    def view_records(self):
+        for record in self.__target_record:
+            self.view_one_record(record.build_record())
+
+    @staticmethod
+    def view_one_record(record):
+        for key, value in record.items():
+            print(value, end=" ")
+        print("")
