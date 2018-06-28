@@ -34,7 +34,7 @@ class AtCoder(Record):
         :param str problem_char:
         """
         self.__contest_name = self.input_loop(r'(ABC|ARC|AGC)([0-9]{3})', 'input contest name that you participated :')
-        self.__problem_char = self.input_loop(r'A|B|C|D|E|F', 'input problem ID [A-F]: ')
+        self.__problem_char = self.input_loop(r'(A|B|C|D|E|F)$', 'input problem ID [A-F]: ')
 
     def build_record(self):
         atcoder_record = OrderedDict({'Contest': self.__contest_name})
@@ -95,3 +95,16 @@ class ProgressList:
 
     def read_record_from_resource(self, resource):
         resource.read_record(self.__progress_list)
+
+    def is_unique_record(self, progress):
+        atcoder = self.extract_atcoder(progress)
+        print(atcoder)
+        for record in self.__progress_list:
+            one_record = record.build_record()
+            for values in one_record.values():
+                print(values)
+
+    @staticmethod
+    def extract_atcoder(progress):
+        atcoder_record = progress.build_record()
+        return [atcoder_record['Contest'], atcoder_record['Problem']]
