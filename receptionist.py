@@ -1,3 +1,6 @@
+from progress import Progress, ProgressList
+
+
 class Receptionist:
 
     def __init__(self):
@@ -31,11 +34,16 @@ class BulletinBoard:
             print(value, end=" ")
         print("")
 
+
 class NewProgress:
 
     def __init__(self, record_container):
         self.__target_record = record_container
 
-    def add_new_record(self):
-        self.__target_record.add_progress(Progress())
+    def add_new_progress(self):
+        if self.__target_record.add_progress(Progress()):
+            return True
+        print("not unique progress")
+        return False
+
 
