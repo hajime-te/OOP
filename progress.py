@@ -91,7 +91,10 @@ class ProgressList:
         self.__progress_list = []
 
     def add_progress(self, progress):
-        self.__progress_list.append(progress)
+        if self.is_unique_record(progress):
+            self.__progress_list.append(progress)
+            return True
+        return False
 
     def read_record_from_resource(self, resource):
         resource.read_record(self.__progress_list)
