@@ -30,3 +30,12 @@ class BulletinBoard:
         for key, value in record.items():
             print(value, end=" ")
         print("")
+
+class NewProgress:
+
+    def __init__(self, record_container):
+        self.__target_record = record_container
+
+    def add_new_record(self):
+        self.__target_record.add_progress(Progress())
+
