@@ -97,14 +97,12 @@ class ProgressList:
         resource.read_record(self.__progress_list)
 
     def is_unique_record(self, progress):
-        atcoder = self.extract_atcoder(progress)
-        print(atcoder)
+        atcoder, value_list = [self.extract_atcoder(progress)], []
         for record in self.__progress_list:
-            one_record = record.build_record()
-            for values in one_record.values():
-                print(values)
+            value_list.append(self.extract_atcoder(record))
+        return len(set(atcoder) & set(value_list)) == 0
 
     @staticmethod
     def extract_atcoder(progress):
         atcoder_record = progress.build_record()
-        return [atcoder_record['Contest'], atcoder_record['Problem']]
+        return atcoder_record['Contest'] + atcoder_record['Problem']
