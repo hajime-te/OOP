@@ -89,12 +89,23 @@ class ProgressList:
 
     def __init__(self):
         self.__progress_list = []
+        self.__index = 0
 
     def add_progress(self, progress):
         if self.is_unique_record(progress):
             self.__progress_list.append(progress)
             return True
         return False
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.__index >= len(self.__progress_list):
+            raise StopIteration
+        one_progress = self.__progress_list[self.__index]
+        self.__index += 1
+        return one_progress
 
     def read_record_from_resource(self, resource):
         resource.read_record(self.__progress_list)

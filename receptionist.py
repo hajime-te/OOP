@@ -46,4 +46,3 @@ class NewProgress:
         print("not unique progress")
         return False
 
-
