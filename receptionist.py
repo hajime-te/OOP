@@ -46,6 +46,7 @@ class NewProgress:
         print("not unique progress")
         return False
 
+
 class SortedProgress:
 
     def __init__(self, record_container):
@@ -53,7 +54,7 @@ class SortedProgress:
 
     def process_record(self):
         record_keys = list(self.__target_record[0].build_record().keys())
-        print(list(record_keys))
+        for index, key in enumerate(record_keys):
+            print("{0}:{1}".format(index, key), end=" ")
         sort_key = record_keys[int(input())]
-        return sorted(self.__target_record, key=lambda key:key.build_record()[sort_key])
-
+        return sorted(self.__target_record, key=lambda key: key.build_record()[sort_key])
