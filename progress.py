@@ -97,6 +97,9 @@ class ProgressList:
             return True
         return False
 
+    def __getitem__(self, item):
+        return self.__progress_list[item]
+
     def __iter__(self):
         return self
 
