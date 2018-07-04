@@ -53,8 +53,32 @@ class SortedProgress:
         self.__target_record = record_container
 
     def process_record(self):
-        record_keys = list(self.__target_record[0].build_record().keys())
+        record_keys = list(self.extract_one_record(self.__target_record).keys())
+        sort_key = self.input_loop(record_keys, 'input target key index: ')
+        return sorted(self.__target_record, key=lambda record_key: record_key.build_record()[sort_key])
+
+    def input_loop(self, record_keys, message):
+        is_correct, sort_key = False, None
+        self.show_list_key(record_keys)
+        while not is_correct:
+            is_correct, sort_key = self.get_correct_key_index(record_keys, message)
+        return sort_key
+
+    @staticmethod
+    def get_correct_key_index(record_keys, message):
+        try:
+            key_index = record_keys[int(input(message))]
+        except (ValueError, IndexError):
+            print('input data is valid')
+            return False, None
+        return True, key_index
+
+    @staticmethod
+    def extract_one_record(record_container):
+        return record_container[0].build_record()
+
+    @staticmethod
+    def show_list_key(record_keys):
         for index, key in enumerate(record_keys):
             print("{0}:{1}".format(index, key), end=" ")
-        sort_key = record_keys[int(input())]
-        return sorted(self.__target_record, key=lambda key: key.build_record()[sort_key])
+        print("\n")
