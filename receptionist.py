@@ -24,7 +24,7 @@ class BulletinBoard:
     def __init__(self, record_container):
         self.__target_record = record_container
 
-    def view_records(self):
+    def process_record(self):
         for record in self.__target_record:
             self.view_one_record(record.build_record())
 
@@ -40,7 +40,7 @@ class NewProgress:
     def __init__(self, record_container):
         self.__target_record = record_container
 
-    def add_new_progress(self):
+    def process_record(self):
         if self.__target_record.add_progress(Progress()):
             return True
         print("not unique progress")
